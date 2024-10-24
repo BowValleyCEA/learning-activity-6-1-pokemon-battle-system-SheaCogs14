@@ -1,9 +1,10 @@
 ﻿
 using game1401_la_starter;
+using System.Data;
 
 MainMenu();
 
- void MainMenu()
+void MainMenu()
 {
     Console.WriteLine("Welcome to  my pokemon adventure!");
 
@@ -19,37 +20,52 @@ MainMenu();
 
     while (true)
     {
-        Console.WriteLine($"\nCurrent Pokémon: {Player1.Name} (Health: {Player1.currentHealth})");
+
+        Console.WriteLine($"\n Player 1 current Pokémon: {Player1.Name} (Health: {Player1.currentHealth})");
         MainMenUSelection choice = ChooseMainOption();
 
         switch (choice)
         {
             case MainMenUSelection.Attack:
                 Player1.ReciveAttack(Player2);
+                if (Player2.currentHealth <= 0)
+                {
+
+                    Console.WriteLine("Player 2 has fainted! Player 1 wins!");
+                    return;
+                }
                 break;
             case MainMenUSelection.Run:
                 Console.WriteLine("You ran away! :( ");
-                break;
+                break; 
 
             case MainMenUSelection.Heal:
                 int heala = 3;
                 Player1.BaseHeal(heala);
+
+                Console.WriteLine($" {Player1.Name} healed for {heala}");
                 break;
 
             case MainMenUSelection.Exit:
                 return;
         }
 
-        Console.WriteLine($"\nCurrent Pokémon: {Player2.Name} (Health: {Player2.currentHealth})");
+        Console.WriteLine($"\n Player 2 current Pokémon: {Player2.Name} (Health: {Player2.currentHealth})");
         choice = ChooseMainOption();
 
         switch (choice)
         {
             case MainMenUSelection.Attack:
                 Player2.ReciveAttack(Player1);
+                if (Player1.currentHealth <= 0)
+                {
+
+                    Console.WriteLine("Player 1 has fainted! Player 2 wins!");
+                    return;
+                }
                 break;
             case MainMenUSelection.Run:
-                Console.WriteLine("You ran away! :( ");
+                Console.WriteLine("You ran away! :( "); 
                 break;
 
             case MainMenUSelection.Heal:
@@ -70,7 +86,7 @@ Pokemon selectionPokemon()
     Console.WriteLine("2: Water");
     Console.WriteLine("3: Fire");
     Console.WriteLine("4: Grass");
-    Console.WriteLine(" Normal");
+    Console.WriteLine("5: Normal");
 
     int selection = 0;
     while (true)
@@ -92,22 +108,22 @@ Pokemon selectionPokemon()
 
 MainMenUSelection ChooseMainOption()
 {
-   bool isSelection = false;
-   int selection = 0;
+    bool isSelection = false;
+    int selection = 0;
 
-   while (!isSelection)
-   {
-       Console.WriteLine("Would you like to:\n\t 1: Attack?! \n\t 2: Run away now?! \n\t 3: Use a heal item? \n\t 4: Exit the program?");
-       if (int.TryParse(Console.ReadLine(), out selection) && selection >= 1 && selection <= 4)
-           isSelection = true;
-   }
+    while (!isSelection)
+    {
+        Console.WriteLine("Would you like to:\n\t 1: Attack?! \n\t 2: Run away now?! \n\t 3: Use a heal item? \n\t 4: Exit the program?");
+        if (int.TryParse(Console.ReadLine(), out selection) && selection >= 1 && selection <= 4)
+            isSelection = true;
+    }
 
-   return (MainMenUSelection)selection;
+    return (MainMenUSelection)selection;
 }
 
 enum MainMenUSelection
 {
-   Attack = 1, Run = 2, Heal = 3, Exit = 4
+    Attack = 1, Run = 2, Heal = 3, Exit = 4
 
 }
 

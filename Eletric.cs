@@ -25,7 +25,6 @@ namespace game1401_la_starter
 
             target.currentHealth -= damage;
 
-
             Console.WriteLine($"{target.Name} has taken {damage} damage!");
         }
     }
